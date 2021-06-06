@@ -68,7 +68,7 @@ public class ItemController {
 	}
 
 	@GetMapping("/obtener-config")
-	public ResponseEntity<?> obtenerConfig(@Value("$ {server.port}") String puerto){
+	public ResponseEntity<?> obtenerConfig(@Value("${server.port}") String puerto){
 		log.info(texto);
 		
 		Map<String, String> json = new HashMap<>();
