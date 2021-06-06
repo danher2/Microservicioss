@@ -38,7 +38,7 @@ public class ItemController {
 	@Qualifier("serviceFeign")
 	private ItemService itemService;
 	
-	@Value("$ {configuracion.texto}") //to pass properties information
+	@Value("${configuracion.texto}") //to pass properties information
 	private String texto;
 	
 	@GetMapping("/listar")
@@ -68,7 +68,7 @@ public class ItemController {
 	}
 
 	@GetMapping("/obtener-config")
-	public ResponseEntity<?> obtenerConfig(@Value("$ {server.port}") String puerto){
+	public ResponseEntity<?> obtenerConfig(@Value("${server.port}") String puerto){
 		log.info(texto);
 		
 		Map<String, String> json = new HashMap<>();
