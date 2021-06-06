@@ -38,7 +38,7 @@ public class ItemController {
 	@Qualifier("serviceFeign")
 	private ItemService itemService;
 	
-	@Value("$ {configuracion.texto}") //to pass properties information
+	@Value("${configuracion.texto}") //to pass properties information
 	private String texto;
 	
 	@GetMapping("/listar")
