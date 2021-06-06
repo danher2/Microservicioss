@@ -22,9 +22,13 @@ import com.formacionbdi.springboot.app.item.models.Producto;
 import com.formacionbdi.springboot.app.item.models.service.ItemService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
+<<<<<<< HEAD
 
 
 @RefreshScope
+=======
+@RefreshScope //actualiza todos los components 
+>>>>>>> bbdee171d5ecb46c99d146ba5ae54fac55e5e3d6
 @RestController
 public class ItemController {
 	
@@ -33,12 +37,15 @@ public class ItemController {
 	@Autowired
 	private Environment env;
 	
-	
 	@Autowired
 	@Qualifier("serviceFeign")
 	private ItemService itemService;
 	
+<<<<<<< HEAD
 	@Value("$ {configuracion.texto}") //to pass properties information
+=======
+	@Value("${configuracion.texto}")
+>>>>>>> bbdee171d5ecb46c99d146ba5ae54fac55e5e3d6
 	private String texto;
 	
 	@GetMapping("/listar")
