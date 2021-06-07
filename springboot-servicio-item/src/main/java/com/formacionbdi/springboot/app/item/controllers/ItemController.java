@@ -40,7 +40,7 @@ public class ItemController {
 	
 	
 	@Autowired
-	@Qualifier("serviceRestTemplate")
+	@Qualifier("serviceFeign")
 	private ItemService itemService;
 	
 	@Value("${configuracion.texto}") //to pass properties information
