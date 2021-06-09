@@ -2,7 +2,9 @@ package com.formacionbdi.springboot.app.usuarios.model.repositoy;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import com.formacionbdi.springboot.app.usuarios.model.entity.Usuario;
 
@@ -10,7 +12,8 @@ import com.formacionbdi.springboot.app.usuarios.model.entity.Usuario;
 @RepositoryRestResource(path = "usuarios")
 public interface UsuarioRepository extends PagingAndSortingRepository<Usuario, Long> {
 
-		public Usuario findByUsername(String username);  //revisar Query Methods
+		@RestResource(path="buscar-username")
+		public Usuario findByUsername(@Param("username") String username);  //revisar Query Methods
 		
 		
 		//query method mediante anotacion query
