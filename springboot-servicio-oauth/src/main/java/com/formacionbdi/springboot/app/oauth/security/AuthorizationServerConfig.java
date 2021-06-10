@@ -3,8 +3,10 @@ package com.formacionbdi.springboot.app.oauth.security;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -16,6 +18,8 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+
+@RefreshScope
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -30,6 +34,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Autowired
 	private InfoAdicionalToken infoadcionalToken;
+	
+	
+	@Autowired
+	private Environment env;
+	
 
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -41,8 +50,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		
-		clients.inMemory().withClient("frontendapp")
-		.secret(passwordEncoder.encode("12345")) //identificador de nuestra app frontend
+		clients.inMemory().withClient(env.getProperty("config.security.oauth.client.id"))
+		.secret(passwordEncoder.encode(env.getProperty("config.security.oauth.client.secret"))) //identificador de nuestra app frontend
 		.scopes("read","write")
 		.authorizedGrantTypes("password","refresh_token")
 		.accessTokenValiditySeconds(3600)
@@ -72,7 +81,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Bean //porque se genera con componentes spring para la configuracion
 	public JwtAccessTokenConverter accesTokenConverter() {
 		JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
-		tokenConverter.setSigningKey("algun-codigo-secreto-aeiou");
+		tokenConverter.setSigningKey("config.security.oauth.client.jwt.key");
 		return tokenConverter;
 	}
 	
