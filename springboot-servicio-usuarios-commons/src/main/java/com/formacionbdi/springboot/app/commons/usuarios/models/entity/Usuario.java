@@ -27,7 +27,7 @@ public class Usuario implements Serializable {
 
 	@Column(unique = true, length = 20)
 	private String username;
-	
+
 	@Column(length = 60)
 	private String password;
 
@@ -37,13 +37,21 @@ public class Usuario implements Serializable {
 
 	@Column(unique = true, length = 100)
 	private String email;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"),
-	inverseJoinColumns = @JoinColumn(name="role_id"),
-	uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id","role_id"})})
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = {
+			@UniqueConstraint(columnNames = { "usuario_id", "role_id" }) })
 	private List<Role> roles;
-	
+
+	private Integer intentos;
+
+	public Integer getIntentos() {
+		return intentos;
+	}
+
+	public void setIntentos(Integer intentos) {
+		this.intentos = intentos;
+	}
 
 	public List<Role> getRoles() {
 		return roles;
